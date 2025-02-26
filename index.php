@@ -12,5 +12,6 @@
     </head>
     <body>
         <h1 class="text-3xl">Test World</h1>
+        <h1 class="text-2xl">Pesan test dari Gua....</h1>
     </body>
 </html>
