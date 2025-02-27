@@ -1,9 +1,9 @@
 <?php
 
-require_once "config.php";
 require_once "session.php";
 
 $error = '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
 
     $email = trim($_POST['email']);
@@ -20,27 +20,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
     }
 
     if (empty($error)) {
-        if($query = $db->prepare("SELECT * FROM users WHERE email = ?")) {
-            $query->bind_param('s', $email);
-            $query->execute();
-            $row = $query->fetch();
-            if ($row) {
-                if (password_verify($password, $row['password'])) {
-                    $_SESSION['userid'] = $row['id'];
-                    $_SESSION['user'] = $row;
+        // API Endpoint
+        $apiurl = 'https://api-yang-dipakai.com/api/login';
 
-                    // Redirect the user to welcome page
-                    header("location: welcome.php");
-                    exit;
-                } else {
-                    $error .= '<p class="error">The Password is Not Valid</p>';
-                }
+        // Prepaing the data for API
+        $postData = array(
+            'email' => $email,
+            'password' => $password
+        );
+
+        // Initialize cURL session
+        $ch = curl_init($apiurl);
+
+        // set cURL options
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ));
+
+        // Execute the request
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLOPT_HTTP_CODE);
+
+        // Close cURL session
+        curl_close($ch);
+
+        // Parse the Response
+        $result = json_decode($response, true);
+
+        if ($httpCode === 200) {
+            if ($result['success']) {
+                // Store user data in session
+                $_SESSION['userid'] = $result['user']['id'];
+                $_SESSION['user'] = $result['user'];
+
+                // Redirect the user to welcome page
+                header("location: welcome.php");
+                exit;
             } else {
-                $error .= '<p class="error"> No User Exist with that Email address.</p>';
+                $error .= '<p class="error">' . $result['massage'] . '</p>';
             }
+        } else {
+            $error .= '<p class="error" Authentication Failed. Please Try Again.</p>'
         }
-        $query->close();
     }
-    // close connection
-    mysqli_close($db);
 }
