@@ -1,5 +1,5 @@
 <nav class="bg-blue-950 h-20 w-full flex justify-between items-center m-auto px-24">
-    <div>
+    <div class="cursor-pointer">
         <svg class="stroke-white" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             width="60" zoomAndPan="magnify" viewBox="0 0 810 675.000002" height="60"
             preserveAspectRatio="xMidYMid meet" version="1.0">
@@ -133,10 +133,10 @@
             </g>
         </svg>
     </div>
-    <ul class="flex justify-center gap-14 items-center text-neutral-100 font-semibold h-full">
-        <li class="h-full flex justify-center items-center px-4"><a href="/">Home</a></li>
-        <li class="h-full flex justify-center items-center px-4"><a href="/">Courses</a></li>
-        <li class="h-full flex justify-center items-center px-4"><a href="/">About Us</a></li>
-        <li class="h-full flex justify-center items-center px-4"><a href="/">Contact Us</a></li>
+    <ul class="flex justify-center items-center gap-4 text-neutral-100 font-semibold h-full">
+        <li class="h-full flex justify-center items-center px-10"><a href="/">Home</a></li>
+        <li class="h-full flex justify-center items-center px-10"><a href="/">Courses</a></li>
+        <li class="h-full flex justify-center items-center px-10"><a href="/about">About Us</a></li>
+        <li class="h-full flex justify-center items-center px-10"><a href="/">Contact Us</a></li>
     </ul>
 </nav>
