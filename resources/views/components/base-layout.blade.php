@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray-100 h-full">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body>
+<body class="h-full w-full">
     <x-nav-bar></x-nav-bar>
     <main>
         {{ $slot }}
